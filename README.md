@@ -52,6 +52,12 @@ firebase deploy --only firestore:rules
 
 4) Run locally
 
+First, start the Firebase emulator:
+```bash
+firebase emulators:start
+```
+
+Then, in another terminal, start the development server:
 ```bash
 pnpm dev # or npm run dev / yarn dev
 ```
@@ -68,7 +74,7 @@ Under `users/{uid}`:
 ## Features (MVP)
 
 - Sign-in (Google or Anonymous)
-- Dashboard with month selector, quick add, today’s list (delete), month stats, month settings
+- Dashboard with month selector, quick add, today's list (delete), month stats, month settings
 - Dedupe on add: same normalized URL for same date
 
 ## TODO V1

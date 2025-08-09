@@ -13,7 +13,7 @@ export default function MonthStats({ stats, monthDoc }) {
         </div>
         <div className="item">
           <div className="label">Daily average</div>
-          <div className="value">{(s.dailyAverage ?? 0).toFixed(2)}</div>
+          <div className="value">{(s.adjustedDailyAverage ?? 0).toFixed(2)}</div>
         </div>
       </div>
 
@@ -34,8 +34,8 @@ export default function MonthStats({ stats, monthDoc }) {
 
       <div className="kpi">
         <div className="item">
-          <div className="label">Pace / day</div>
-          <div className="value">{s.pacePerDay ?? 0}</div>
+          <div className="label">Needed per workday</div>
+          <div className="value">{s.ticketsPerDayToGoal ?? 0}</div>
         </div>
         <div className="item">
           <div className="label">Hours this month</div>
@@ -44,13 +44,6 @@ export default function MonthStats({ stats, monthDoc }) {
         <div className="item">
           <div className="label">Adjusted day equivalents</div>
           <div className="value">{(s.adjustedDayEquivalents ?? 0).toFixed(2)}</div>
-        </div>
-      </div>
-
-      <div className="kpi">
-        <div className="item">
-          <div className="label">Adjusted daily avg</div>
-          <div className="value">{(s.adjustedDailyAverage ?? 0).toFixed(2)}</div>
         </div>
       </div>
 

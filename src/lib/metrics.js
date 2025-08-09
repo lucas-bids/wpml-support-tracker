@@ -64,20 +64,18 @@ export function computeMonthStats({
   const upcomingDaysOff = Math.max(0, daysOff.length - daysOffUpToToday)
   const remainingDays = Math.max(0, weekdaysLeft - upcomingDaysOff)
 
-  const dailyAverage = total / Math.max(1, workedDaysSoFar)
   const remaining = Math.max(0, monthlyGoal - total)
-  const pacePerDay = Math.ceil(remaining / Math.max(1, remainingDays))
+  const ticketsPerDayToGoal = Math.ceil(remaining / Math.max(1, remainingDays))
   const adjustedDailyAverage = total / Math.max(1, adjustedDayEquivalents)
 
   return {
     total,
     workedDaysSoFar,
-    dailyAverage,
     dailyAverageGoal,
     monthlyGoal,
     remaining,
     remainingDays,
-    pacePerDay,
+    ticketsPerDayToGoal,
     hoursThisMonth,
     adjustedDayEquivalents,
     adjustedDailyAverage,
