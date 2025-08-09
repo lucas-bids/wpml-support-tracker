@@ -56,11 +56,12 @@ export default function MonthSettings({ user, monthKey, value }) {
       <div className="form-group">
         <div className="row">
           <label style={{ flex: 1 }}>
-            <span className="muted">Monthly goal</span>
+            <span className="muted">Daily average goal (tickets/day)</span>
             <input
               className="input"
               type="number"
               min="0"
+              step="0.1"
               value={form.monthlyGoal}
               onChange={(e) => setForm((f) => ({ ...f, monthlyGoal: Number(e.target.value) }))}
             />

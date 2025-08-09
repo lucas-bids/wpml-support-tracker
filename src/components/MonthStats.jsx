@@ -19,20 +19,24 @@ export default function MonthStats({ stats, monthDoc }) {
 
       <div className="kpi">
         <div className="item">
-          <div className="label">Goal</div>
-          <div className="value">{s.goal ?? 0}</div>
+          <div className="label">Daily goal</div>
+          <div className="value">{(s.dailyAverageGoal ?? 0).toFixed(1)}</div>
+        </div>
+        <div className="item">
+          <div className="label">Monthly goal</div>
+          <div className="value">{s.monthlyGoal ?? 0}</div>
         </div>
         <div className="item">
           <div className="label">Remaining</div>
           <div className="value">{s.remaining ?? 0}</div>
         </div>
+      </div>
+
+      <div className="kpi">
         <div className="item">
           <div className="label">Pace / day</div>
           <div className="value">{s.pacePerDay ?? 0}</div>
         </div>
-      </div>
-
-      <div className="kpi">
         <div className="item">
           <div className="label">Hours this month</div>
           <div className="value">{s.hoursThisMonth ?? 0}</div>
@@ -41,6 +45,9 @@ export default function MonthStats({ stats, monthDoc }) {
           <div className="label">Adjusted day equivalents</div>
           <div className="value">{(s.adjustedDayEquivalents ?? 0).toFixed(2)}</div>
         </div>
+      </div>
+
+      <div className="kpi">
         <div className="item">
           <div className="label">Adjusted daily avg</div>
           <div className="value">{(s.adjustedDailyAverage ?? 0).toFixed(2)}</div>
@@ -48,7 +55,7 @@ export default function MonthStats({ stats, monthDoc }) {
       </div>
 
       <div className="muted">
-        Goal: {monthDoc?.monthlyGoal || 0} • Days off: {monthDoc?.daysOff?.length || 0} • Extra task hours: {monthDoc?.extraTaskHours || 0}
+        Daily goal: {(monthDoc?.monthlyGoal || 0).toFixed(1)} tickets/day • Days off: {monthDoc?.daysOff?.length || 0} • Extra task hours: {monthDoc?.extraTaskHours || 0}
       </div>
     </div>
   )

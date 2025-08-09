@@ -9,7 +9,7 @@ export function computeMonthStats({
   selectedMonthKey,
 }) {
   const total = ticketsForMonth.length
-  const goal = Number(monthDoc?.monthlyGoal || 0)
+  const dailyAverageGoal = Number(monthDoc?.monthlyGoal || 0) // This is now the daily average goal
   const extraTaskHours = Number(monthDoc?.extraTaskHours || 0)
   const daysOff = Array.isArray(monthDoc?.daysOff) ? monthDoc.daysOff : []
 
@@ -21,6 +21,9 @@ export function computeMonthStats({
   const workingDays = Math.max(0, weekdaysInMonth(year, month) - daysOff.length)
   const hoursThisMonth = Math.max(0, workingDays * workdayHours - extraTaskHours)
   const adjustedDayEquivalents = Math.max(0, hoursThisMonth / workdayHours)
+  
+  // Calculate monthly goal from daily average goal
+  const monthlyGoal = Math.round(dailyAverageGoal * adjustedDayEquivalents)
 
   // Worked days so far (weekdays from 1st..today) minus daysOff up to today
   // Determine cutoff day for "worked so far" depending on selected month
@@ -62,7 +65,7 @@ export function computeMonthStats({
   const remainingDays = Math.max(0, weekdaysLeft - upcomingDaysOff)
 
   const dailyAverage = total / Math.max(1, workedDaysSoFar)
-  const remaining = Math.max(0, goal - total)
+  const remaining = Math.max(0, monthlyGoal - total)
   const pacePerDay = Math.ceil(remaining / Math.max(1, remainingDays))
   const adjustedDailyAverage = total / Math.max(1, adjustedDayEquivalents)
 
@@ -70,7 +73,8 @@ export function computeMonthStats({
     total,
     workedDaysSoFar,
     dailyAverage,
-    goal,
+    dailyAverageGoal,
+    monthlyGoal,
     remaining,
     remainingDays,
     pacePerDay,
