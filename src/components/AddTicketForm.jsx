@@ -64,26 +64,30 @@ export default function AddTicketForm({ user, monthKey, dateKey, existingToday =
 
   return (
     <form onSubmit={onSubmit} className="grid" aria-label="Add ticket form">
-      <label>
-        <span className="muted">Ticket URL</span>
-        <input
-          className="input"
-          type="url"
-          placeholder="Paste URL..."
-          value={url}
-          onChange={(e) => setUrl(e.target.value)}
-          required
-        />
-      </label>
+      <div className="form-group">
+        <label>
+          <span className="muted">Ticket URL</span>
+          <input
+            className="input"
+            type="url"
+            placeholder="Paste URL..."
+            value={url}
+            onChange={(e) => setUrl(e.target.value)}
+            required
+          />
+        </label>
+      </div>
 
-      <div className="row" role="group" aria-label="Ticket type">
-        <select className="select" value={type} onChange={(e) => setType(e.target.value)}>
-          <option value="chat">Chat</option>
-          <option value="forum">Forum</option>
-        </select>
-        <button className="btn primary" type="submit" disabled={submitting}>
-          {submitting ? 'Saving…' : 'Save'}
-        </button>
+      <div className="form-group">
+        <div className="row" role="group" aria-label="Ticket type">
+          <select className="select" value={type} onChange={(e) => setType(e.target.value)}>
+            <option value="chat">Chat</option>
+            <option value="forum">Forum</option>
+          </select>
+          <button className="btn primary" type="submit" disabled={submitting}>
+            {submitting ? 'Saving…' : 'Save'}
+          </button>
+        </div>
       </div>
 
       {error ? (

@@ -1,4 +1,5 @@
 :root {
+  /* Colors */
   --bg: #0f172a;
   --panel: #111827;
   --text: #e5e7eb;
@@ -6,6 +7,30 @@
   --accent: #22c55e;
   --danger: #ef4444;
   --border: #1f2937;
+
+  /* Spacing System - 8px base unit */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+
+  /* Typography */
+  --line-height: 1.5;
+  --heading-margin-top: var(--space-4);
+  --heading-margin-bottom: var(--space-2);
+  --paragraph-margin-top: var(--space-2);
+  --paragraph-margin-bottom: var(--space-1);
+  --form-label-margin-top: var(--space-2);
+  --form-label-margin-bottom: var(--space-1);
+
+  /* Layout */
+  --section-gap: var(--space-4);
+  --card-padding: var(--space-4);
+  --input-padding: var(--space-3);
+  --button-padding: var(--space-3);
 }
 
 * { box-sizing: border-box; }
@@ -17,20 +42,37 @@ body {
     "Segoe UI Emoji";
   color: var(--text);
   background: linear-gradient(180deg, #0b1220, #0f172a 30%);
+  line-height: var(--line-height);
+}
+
+/* Typography spacing */
+h1, h2, h3, h4, h5, h6 {
+  margin-top: var(--heading-margin-top);
+  margin-bottom: var(--heading-margin-bottom);
+  line-height: var(--line-height);
+}
+
+p, label {
+  margin-top: var(--paragraph-margin-top);
+  margin-bottom: var(--paragraph-margin-bottom);
+  line-height: var(--line-height);
 }
 
 .container {
   max-width: 960px;
   margin: 0 auto;
-  padding: 16px;
+  padding: var(--space-4);
 }
 
 a { color: var(--accent); text-decoration: none; }
-input, select, button, textarea { font: inherit; }
+input, select, button, textarea { 
+  font: inherit; 
+  line-height: var(--line-height);
+}
 
 .grid {
   display: grid;
-  gap: 16px;
+  gap: var(--section-gap);
 }
 
 @media (min-width: 900px) {

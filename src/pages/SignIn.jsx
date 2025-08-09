@@ -7,7 +7,7 @@ export default function SignIn() {
       <div className="card" style={{ maxWidth: 420, width: '100%' }}>
         <h1 style={{ marginTop: 0 }}>Ticket Pace</h1>
         <p className="muted">Track WPML tickets and pace vs. your goal.</p>
-        <div className="grid" style={{ marginTop: 16 }}>
+        <div className="grid" style={{ marginTop: 'var(--space-4)' }}>
           <button
             className="btn primary"
             onClick={signInWithGoogle}

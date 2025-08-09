@@ -2,7 +2,7 @@
   background: rgba(17, 24, 39, 0.8);
   border: 1px solid var(--border);
   border-radius: 12px;
-  padding: 16px;
+  padding: var(--card-padding);
   backdrop-filter: blur(8px);
 }
 
@@ -10,9 +10,10 @@
   background: var(--panel);
   border: 1px solid var(--border);
   color: var(--text);
-  padding: 8px 12px;
+  padding: var(--button-padding);
   border-radius: 8px;
   cursor: pointer;
+  line-height: var(--line-height);
 }
 .btn.primary { border-color: transparent; background: var(--accent); color: #071b11; }
 .btn.danger { border-color: #6b1b1b; background: var(--danger); color: #160707; }
@@ -20,26 +21,127 @@
 
 .input, .select {
   width: 100%;
-  padding: 10px 12px;
+  padding: var(--input-padding);
   background: #0b1020;
   color: var(--text);
   border: 1px solid var(--border);
   border-radius: 8px;
+  line-height: var(--line-height);
 }
 
-.row { display: flex; gap: 8px; align-items: center; }
-.space-between { display: flex; justify-content: space-between; align-items: center; }
+.row { 
+  display: flex; 
+  gap: var(--space-2); 
+  align-items: center; 
+}
+.space-between { 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+}
 .muted { color: var(--muted); }
-.title { font-weight: 600; font-size: 18px; }
-.header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
-.month-label { min-width: 200px; text-align: center; font-weight: 600; }
+.title { 
+  font-weight: 600; 
+  font-size: 18px; 
+  margin-top: var(--heading-margin-top);
+  margin-bottom: var(--heading-margin-bottom);
+}
+.header { 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+  margin-bottom: var(--section-gap); 
+}
+.month-label { 
+  min-width: 200px; 
+  text-align: center; 
+  font-weight: 600; 
+  margin: 0 var(--space-2);
+}
 
-.list { list-style: decimal; padding-left: 20px; }
-.list li { margin: 6px 0; }
+.list { 
+  list-style: decimal; 
+  padding-left: var(--space-5); 
+}
+.list li { 
+  margin: var(--space-1) 0; 
+  line-height: var(--line-height);
+}
 
-.kpi { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-.kpi .item { background: #0a1324; border: 1px solid var(--border); padding: 12px; border-radius: 10px; }
-.kpi .item .label { color: var(--muted); font-size: 12px; }
-.kpi .item .value { font-size: 18px; font-weight: 600; }
+.kpi { 
+  display: grid; 
+  grid-template-columns: repeat(3, 1fr); 
+  gap: var(--space-3); 
+}
+.kpi .item { 
+  background: #0a1324; 
+  border: 1px solid var(--border); 
+  padding: var(--space-3); 
+  border-radius: 10px; 
+}
+.kpi .item .label { 
+  color: var(--muted); 
+  font-size: 12px; 
+  margin-bottom: var(--space-1);
+  line-height: var(--line-height);
+}
+.kpi .item .value { 
+  font-size: 18px; 
+  font-weight: 600; 
+  line-height: var(--line-height);
+}
+
+/* Utility classes for consistent spacing */
+.mt-0 { margin-top: 0; }
+.mt-1 { margin-top: var(--space-1); }
+.mt-2 { margin-top: var(--space-2); }
+.mt-3 { margin-top: var(--space-3); }
+.mt-4 { margin-top: var(--space-4); }
+
+.mb-0 { margin-bottom: 0; }
+.mb-1 { margin-bottom: var(--space-1); }
+.mb-2 { margin-bottom: var(--space-2); }
+.mb-3 { margin-bottom: var(--space-3); }
+.mb-4 { margin-bottom: var(--space-4); }
+
+.ml-1 { margin-left: var(--space-1); }
+.ml-2 { margin-left: var(--space-2); }
+.ml-3 { margin-left: var(--space-3); }
+
+.mr-1 { margin-right: var(--space-1); }
+.mr-2 { margin-right: var(--space-2); }
+.mr-3 { margin-right: var(--space-3); }
+
+.gap-1 { gap: var(--space-1); }
+.gap-2 { gap: var(--space-2); }
+.gap-3 { gap: var(--space-3); }
+.gap-4 { gap: var(--space-4); }
+
+/* Form specific spacing */
+form label {
+  display: block;
+  margin-top: var(--form-label-margin-top);
+  margin-bottom: var(--form-label-margin-bottom);
+}
+
+form label span {
+  display: block;
+  margin-bottom: var(--space-1);
+}
+
+/* Ensure consistent spacing for form groups */
+.form-group {
+  margin-bottom: var(--section-gap);
+}
+
+/* Section spacing */
+.section {
+  margin-bottom: var(--section-gap);
+}
+
+/* Card content spacing */
+.card > *:not(:last-child) {
+  margin-bottom: var(--space-3);
+}
 
 

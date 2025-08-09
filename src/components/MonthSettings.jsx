@@ -53,34 +53,36 @@ export default function MonthSettings({ user, monthKey, value }) {
 
   return (
     <div className="grid">
-      <div className="row">
-        <label style={{ flex: 1 }}>
-          <span className="muted">Monthly goal</span>
-          <input
-            className="input"
-            type="number"
-            min="0"
-            value={form.monthlyGoal}
-            onChange={(e) => setForm((f) => ({ ...f, monthlyGoal: Number(e.target.value) }))}
-          />
-        </label>
-        <label style={{ flex: 1 }}>
-          <span className="muted">Extra task hours</span>
-          <input
-            className="input"
-            type="number"
-            min="0"
-            value={form.extraTaskHours}
-            onChange={(e) => setForm((f) => ({ ...f, extraTaskHours: Number(e.target.value) }))}
-          />
-        </label>
+      <div className="form-group">
+        <div className="row">
+          <label style={{ flex: 1 }}>
+            <span className="muted">Monthly goal</span>
+            <input
+              className="input"
+              type="number"
+              min="0"
+              value={form.monthlyGoal}
+              onChange={(e) => setForm((f) => ({ ...f, monthlyGoal: Number(e.target.value) }))}
+            />
+          </label>
+          <label style={{ flex: 1 }}>
+            <span className="muted">Extra task hours</span>
+            <input
+              className="input"
+              type="number"
+              min="0"
+              value={form.extraTaskHours}
+              onChange={(e) => setForm((f) => ({ ...f, extraTaskHours: Number(e.target.value) }))}
+            />
+          </label>
+        </div>
       </div>
 
-      <div>
-        <div className="muted" style={{ marginBottom: 6 }}>Days off (weekdays)</div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: 6 }}>
+      <div className="form-group">
+        <div className="muted" style={{ marginBottom: 'var(--space-1)' }}>Days off (weekdays)</div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: 'var(--space-1)' }}>
           {days.map((k) => (
-            <label key={k} className="row" style={{ gap: 6 }}>
+            <label key={k} className="row" style={{ gap: 'var(--space-1)' }}>
               <input
                 type="checkbox"
                 checked={form.daysOff.includes(k)}
@@ -93,8 +95,10 @@ export default function MonthSettings({ user, monthKey, value }) {
         </div>
       </div>
 
-      <div className="row" style={{ justifyContent: 'flex-end' }}>
-        <button className="btn primary" onClick={save}>Save</button>
+      <div className="form-group">
+        <div className="row" style={{ justifyContent: 'flex-end' }}>
+          <button className="btn primary" onClick={save}>Save</button>
+        </div>
       </div>
     </div>
   )

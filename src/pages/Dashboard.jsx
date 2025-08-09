@@ -100,7 +100,7 @@ export default function Dashboard({ user }) {
         </div>
       </div>
 
-      <div className="grid" style={{ marginTop: 16 }}>
+      <div className="grid" style={{ marginTop: 'var(--space-4)' }}>
         <div className="card">
           <div className="space-between">
             <div className="title">Today’s Tickets</div>
