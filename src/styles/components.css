@@ -10,7 +10,7 @@
   background: var(--panel);
   border: 1px solid var(--border);
   color: var(--text);
-  padding: var(--button-padding);
+  padding: var(--space-2) var(--space-4);
   border-radius: 8px;
   cursor: pointer;
   line-height: var(--line-height);
@@ -124,14 +124,9 @@ form label {
   margin-bottom: var(--form-label-margin-bottom);
 }
 
-form label span {
+form label span, .row label span {
   display: block;
-  margin-bottom: var(--space-1);
-}
-
-/* Ensure consistent spacing for form groups */
-.form-group {
-  margin-bottom: var(--section-gap);
+  margin-bottom: var(--space-2);
 }
 
 /* Section spacing */
