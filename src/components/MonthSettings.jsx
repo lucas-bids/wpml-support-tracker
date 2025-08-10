@@ -15,19 +15,35 @@ export default function MonthSettings({ user, monthKey, value }) {
     })
   }, [value])
 
-  const days = useMemo(() => {
-    const [y, m] = monthKey.split('-').map(Number)
-    const end = new Date(y, m, 0).getDate()
-    const list = []
-    for (let d = 1; d <= end; d++) {
-      const dt = new Date(y, m - 1, d)
-      const dow = dt.getDay()
-      if (dow >= 1 && dow <= 5) {
-        list.push(`${monthKey}-${String(d).padStart(2, '0')}`)
-      }
-    }
-    return list
-  }, [monthKey])
+  const headers = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+  const [y, m] = monthKey.split('-').map(Number)
+  const first = new Date(y, m - 1, 1)
+  const startCol = first.getDay() // 0=Sun..6=Sat
+  const daysInMonth = new Date(y, m, 0).getDate()
+  const cells = []
+  for (let i = 0; i < startCol; i++) cells.push({ type: 'pad' })
+  for (let d = 1; d <= daysInMonth; d++) {
+    const dt = new Date(y, m - 1, d)
+    const dow = dt.getDay()
+    const k = `${monthKey}-${String(d).padStart(2, '0')}`
+    const isWeekend = dow === 0 || dow === 6
+    const isOff = form.daysOff.includes(k)
+    cells.push({
+      type: 'day',
+      k,
+      d,
+      dow,
+      isWeekend,
+      isOff,
+      isWeekday: dow >= 1 && dow <= 5,
+    })
+  }
+  while (cells.length % 7 !== 0) cells.push({ type: 'pad' })
+
+  function onToggle(k, isWeekday) {
+    if (!isWeekday) return
+    toggleDayOff(k)
+  }
 
   function toggleDayOff(k) {
     setForm((prev) => {
@@ -80,19 +96,52 @@ export default function MonthSettings({ user, monthKey, value }) {
       </div>
 
       <div className="form-group">
-        <div className="muted" style={{ marginBottom: 'var(--space-1)' }}>Days off (weekdays)</div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: 'var(--space-1)' }}>
-          {days.map((k) => (
-            <label key={k} className="row" style={{ gap: 'var(--space-1)' }}>
-              <input
-                type="checkbox"
-                checked={form.daysOff.includes(k)}
-                onChange={() => toggleDayOff(k)}
-                aria-label={`Day off ${k}`}
-              />
-              <span className="muted" style={{ fontSize: 12 }}>{k.slice(-2)}</span>
-            </label>
+
+
+      <div className="row space-between" style={{ marginBottom: 'var(--space-2)' }}>
+          <div className="muted">Days off</div>
+          <div className="calendar-legend">
+            <span className="chip chip--work" /> <small className="muted">Working day</small>
+            <span className="chip chip--off" /> <small className="muted ml-2">Day off</small>
+            <span className="chip chip--nonwork" /> <small className="muted ml-2">Weekend</small>
+          </div>
+        </div>
+
+        <div className="calendar">
+          {headers.map((h) => (
+            <div key={h} className="calendar__head muted">
+              {h}
+            </div>
+
           ))}
+
+{cells.map((c, i) => {
+            if (c.type === 'pad') {
+              return <div key={`pad-${i}`} className="calendar__cell calendar__cell--pad" aria-hidden="true" />
+            }
+            const cls = [
+              'calendar__cell',
+              c.isWeekend ? 'is-weekend' : 'is-weekday',
+              c.isWeekday && c.isOff ? 'is-off' : '',
+            ]
+              .filter(Boolean)
+              .join(' ')
+            const label = `${String(c.d).padStart(2, '0')}`
+            return (
+              <button
+                key={c.k}
+                type="button"
+                className={cls}
+                aria-pressed={c.isWeekday && c.isOff ? 'true' : 'false'}
+                aria-label={`${c.isWeekday ? (c.isOff ? 'Day off' : 'Working day') : 'Weekend'} ${c.k}`}
+                onClick={() => onToggle(c.k, c.isWeekday)}
+                disabled={!c.isWeekday}
+              >
+                {label}
+              </button>
+            )
+          })}
+          
         </div>
       </div>
 
