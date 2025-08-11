@@ -1,12 +1,21 @@
 :root {
-  /* Colors */
-  --bg: #0f172a;
-  --panel: #111827;
-  --text: #e5e7eb;
-  --muted: #9ca3af;
-  --accent: #22c55e;
-  --danger: #ef4444;
-  --border: #1f2937;
+  /* Colors: Light UI foundation with blue accents */
+  /* Base Backgrounds */
+  --bg: #F5F6FA;          /* Light gray main background */
+  --panel: #FFFFFF;       /* Card/panel surface */
+  --border: #DDE1E7;      /* Light border lines */
+
+  /* Text */
+  --text: #1E293B;        /* Dark navy text */
+  --muted: #64748B;       /* Muted blue-gray */
+
+  /* Accent (Blues replacing green) */
+  --accent: #1E3A8A;      /* Primary dark blue */
+  --accent-light: #3B82F6;/* Medium blue for hovers */
+  --accent-bg: #E0E7FF;   /* Very light blue background fill */
+
+  /* Status */
+  --danger: #EF4444;      /* Red for errors */
 
   /* Spacing System - 8px base unit */
   --space-1: 4px;
@@ -19,7 +28,7 @@
 
   /* Typography */
   --line-height: 1.5;
-  --heading-margin-top: var(--space-4);
+  --heading-margin-top: var(--space-2);
   --heading-margin-bottom: var(--space-2);
   --paragraph-margin-top: var(--space-2);
   --paragraph-margin-bottom: var(--space-1);
@@ -28,9 +37,15 @@
 
   /* Layout */
   --section-gap: var(--space-4);
-  --card-padding: var(--space-4);
+  --card-padding: var(--space-5);
   --input-padding: var(--space-3);
   --button-padding: var(--space-2);
+
+  /* Radius */
+  --radius-sm: 6px;   /* small chips, indicators */
+  --radius-md: 12px;   /* buttons, inputs, cells */
+  --radius-lg: 18px;  /* small cards */
+  --radius-xl: 24px;  /* main cards/panels */
 }
 
 * { box-sizing: border-box; }
@@ -41,7 +56,7 @@ body {
     Cantarell, Noto Sans, Helvetica Neue, Arial, "Apple Color Emoji",
     "Segoe UI Emoji";
   color: var(--text);
-  background: linear-gradient(180deg, #0b1220, #0f172a 30%);
+  background: var(--bg);
   line-height: var(--line-height);
 }
 

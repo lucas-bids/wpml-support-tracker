@@ -10,7 +10,7 @@ export function computeMonthStats({
 }) {
   const total = ticketsForMonth.length
   const dailyAverageGoal = Number(monthDoc?.monthlyGoal || 0)
-  const extraTaskHours = Number(monthDoc?.extraTaskHours || 0) // month total (we’ll cap to “so far”)
+  const extraTaskHours = Number(monthDoc?.extraTaskHours || 0) // month total `1(we’ll cap to “so far”)
   const daysOff = Array.isArray(monthDoc?.daysOff) ? monthDoc.daysOff : []
 
   const effectiveMonthKey = selectedMonthKey || toMonthKey(today, tz)
