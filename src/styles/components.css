@@ -47,7 +47,7 @@
 .title { 
   font-weight: 700; 
   font-size: var(--fs-xl); 
-  margin-top: var(--heading-margin-top);
+  margin-top: 0;
   margin-bottom: var(--heading-margin-bottom);
 }
 .header { 
