@@ -15,7 +15,7 @@ import Header from '../components/Header.jsx'
 import AddTicketForm from '../components/AddTicketForm.jsx'
 import TicketList from '../components/TicketList.jsx'
 import MonthStats from '../components/MonthStats.jsx'
-import MonthSettings from '../components/MonthSettings.jsx'
+import SettingsOverlay from '../SettingsOverlay.jsx'
 
 const TZ = 'America/Sao_Paulo'
 
@@ -25,6 +25,7 @@ export default function Dashboard({ user }) {
   const [ticketsToday, setTicketsToday] = useState([])
   const [ticketsMonth, setTicketsMonth] = useState([])
   const [monthDoc, setMonthDoc] = useState({ monthlyGoal: 0, extraTaskHours: 0, daysOff: [] })
+  const [settingsOpen, setSettingsOpen] = useState(false)
 
   useEffect(() => {
     // Update todayKey hourly (simple)
@@ -79,41 +80,107 @@ export default function Dashboard({ user }) {
     await deleteDoc(doc(db, 'users', user.uid, 'tickets', id))
   }
 
+  function StatCard({ label, value }) {
+    return (
+      <div className="grid">
+        <div className="muted">{label}</div>
+        <div style={{ fontWeight: 600, fontSize: 24 }}>{value}</div>
+      </div>
+    )
+  }
+
   return (
     <div className="container">
-      <Header monthKey={monthKey} onChangeMonthKey={setMonthKey} onSignOut={signOutUser} />
+      <Header
+        monthKey={monthKey}
+        onChangeMonthKey={setMonthKey}
+        onSignOut={signOutUser}
+        onOpenSettings={() => setSettingsOpen(true)}
+      />
 
-      <div className="grid grid-2">
-        <div className="card">
-          <div className="title">Quick Add</div>
-          <AddTicketForm
-            user={user}
-            monthKey={monthKey}
-            dateKey={todayKey}
-            existingToday={ticketsToday}
-          />
-        </div>
+      {/* Two main columns */}
+      <div className="dashboard-grid">
 
-        <div className="card">
-          <div className="title">Month Stats</div>
-          <MonthStats stats={stats} monthDoc={monthDoc} />
-        </div>
-      </div>
+        {/* ===== Left main column ===== */}
+        <section className="left-col">
 
-      <div className="grid" style={{ marginTop: 'var(--space-4)' }}>
-        <div className="card">
-          <div className="space-between">
-            <div className="title">Today’s Tickets</div>
-            <div className="muted">{todayKey}</div>
+          {/* Row 1: Quick Add (single wide card) */}
+          <div className="card">
+            <div className="title">Quick Add</div>
+            <AddTicketForm
+              user={user}
+              monthKey={monthKey}
+              dateKey={todayKey}
+              existingToday={ticketsToday}
+            />
           </div>
-          <TicketList tickets={ticketsToday} onDelete={handleDelete} />
-        </div>
 
-        <div className="card">
-          <div className="title">Month Settings</div>
-          <MonthSettings user={user} monthKey={monthKey} value={monthDoc} />
-        </div>
+          {/* Row 2: two internal columns */}
+          <div className="left-row-2">
+            <div className="card">
+              <div className="title">Daily total</div>
+              <StatCard label="Today" value={ticketsToday.length} />
+            </div>
+
+            <div className="card">
+              <div className="title">Needed per workday</div>
+              <StatCard label="To goal" value={stats.ticketsPerDayToGoal ?? 0} />
+            </div>
+          </div>
+
+          {/* Row 3: two internal columns */}
+          <div className="left-row-3">
+            <div className="card">
+              <div className="title">Daily average</div>
+              <StatCard label="So far" value={(stats.adjustedDailyAverage ?? 0).toFixed(1)} />
+            </div>
+
+            <div className="card">
+              <div className="title">Remaining</div>
+              <StatCard label="Tickets left" value={stats.remaining ?? 0} />
+            </div>
+          </div>
+        </section>
+
+        {/* ===== Right main column ===== */}
+        <section className="right-col">
+
+          {/* Rows 1 & 2: Ticket list spans two rows, full width of right column */}
+          <div className="card right-ticketlist">
+            <div className="space-between">
+              <div className="title">Day’s Tickets</div>
+              <div className="muted">{todayKey}</div>
+            </div>
+            <div className="ticket-list-scroll">
+              <TicketList tickets={ticketsToday} onDelete={handleDelete} />
+            </div>
+          </div>
+
+          {/* Row 3: Wide card with days off + extra task hours summary */}
+          <div className="card right-summary">
+            <div className="title">Month summary</div>
+            <div className="grid">
+              <div className="row">
+                <div className="muted">Days off</div>
+                <div style={{ marginLeft: 'auto' }}>{monthDoc.daysOff?.length || 0}</div>
+              </div>
+              <div className="row">
+                <div className="muted">Extra task hours</div>
+                <div style={{ marginLeft: 'auto' }}>{monthDoc.extraTaskHours || 0}</div>
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
+
+      {/* Settings overlay */}
+      <SettingsOverlay
+        open={settingsOpen}
+        onClose={() => setSettingsOpen(false)}
+        user={user}
+        monthKey={monthKey}
+        value={monthDoc}
+      />
 
       {/* TODO V1: edit ticket; per-day view; exports */}
     </div>

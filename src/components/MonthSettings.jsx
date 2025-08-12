@@ -5,7 +5,7 @@ import { toMonthKey } from '../lib/date.js'
 
 const TZ = 'America/Sao_Paulo'
 
-export default function MonthSettings({ user, monthKey, value }) {
+export default function MonthSettings({ user, monthKey, value, onSaved }) {
   const [form, setForm] = useState({ monthlyGoal: 0, extraTaskHours: 0, daysOff: [] })
   useEffect(() => {
     setForm({
@@ -65,6 +65,7 @@ export default function MonthSettings({ user, monthKey, value }) {
       },
       { merge: true }
     )
+    if (typeof onSaved === 'function') onSaved()
   }
 
   return (

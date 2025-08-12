@@ -2,10 +2,12 @@ import { useState } from 'react'
 import { addDoc, collection, getDocs, query, where } from 'firebase/firestore'
 import { db, nowTs } from '../lib/firebase.js'
 import { isValidTicketUrl, normalizeUrl } from '../lib/url.js'
+import { parseISODateKey, toMonthKey } from '../lib/date.js'
 
 export default function AddTicketForm({ user, monthKey, dateKey, existingToday = [] }) {
   const [url, setUrl] = useState('')
   const [type, setType] = useState('chat')
+  const [dateStr, setDateStr] = useState(dateKey)
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState('')
 
@@ -31,9 +33,12 @@ export default function AddTicketForm({ user, monthKey, dateKey, existingToday =
 
     setSubmitting(true)
     try {
+      const chosenDateKey = dateStr || dateKey
+      const chosenMonthKey = toMonthKey(parseISODateKey(chosenDateKey))
+
       // Extra safety: query Firestore for same day+normalized
       const col = collection(db, 'users', user.uid, 'tickets')
-      const q = query(col, where('dateKey', '==', dateKey))
+      const q = query(col, where('dateKey', '==', chosenDateKey))
       const snap = await getDocs(q)
       const dupRemote = snap.docs.some((d) => d.data().normalized === normalized)
       if (dupRemote) {
@@ -46,8 +51,8 @@ export default function AddTicketForm({ user, monthKey, dateKey, existingToday =
         url: url.trim(),
         type,
         createdAt: nowTs(),
-        dateKey,
-        monthKey,
+        dateKey: chosenDateKey,
+        monthKey: chosenMonthKey,
         source: 'manual',
         normalized,
       })
@@ -79,8 +84,16 @@ export default function AddTicketForm({ user, monthKey, dateKey, existingToday =
       </div>
 
       <div className="form-group">
-        <div className="row" role="group" aria-label="Ticket type">
-          <select className="select" value={type} onChange={(e) => setType(e.target.value)}>
+        <div className="row" role="group" aria-label="Ticket details">
+          <input
+            className="input"
+            type="date"
+            value={dateStr}
+            onChange={(e) => setDateStr(e.target.value)}
+            aria-label="Ticket date"
+            style={{ width: 'auto', flex: '1 1 0' }}
+          />
+          <select className="select" value={type} onChange={(e) => setType(e.target.value)} style={{ width: 'auto', flex: '1 1 0' }}>
             <option value="chat">Chat</option>
             <option value="forum">Forum</option>
           </select>
